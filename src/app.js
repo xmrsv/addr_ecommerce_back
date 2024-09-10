@@ -7,11 +7,13 @@ import morgan from "morgan";
 import orderRoutes from "./route/order.route.js";
 import indexRoutes from "./route/index.route.js";
 import productRoutes from "./route/product.route.js"; // Importa las rutas de productos
+import cors from "cors";
 
 const app = express();
 
 // Middlewares
 app.use(morgan("dev"));
+app.use(cors());
 app.use(express.json());
 
 // Routes
