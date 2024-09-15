@@ -27,6 +27,5 @@ const Product = sequelize.define('Product', {
 });
 
 // Define la relación con OrderItem usando una referencia hacia adelante
-Product.hasMany(sequelize.models.OrderItem, { foreignKey: 'productId' });
 
 export default Product;
