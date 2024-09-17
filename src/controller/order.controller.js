@@ -160,13 +160,23 @@ export const actualizarOrden = async (req, res) => {
     // Eliminar los OrderItems existentes para la orden
     await OrderItem.destroy({ where: { orderId: updatedOrder.id } });
 
-    // Crear los nuevos OrderItems para la orden
+    // Crear los OrderItems para cada producto en la orden
     for (const item of items) {
-      await OrderItem.create({
-        orderId: updatedOrder.id,
-        productId: item.productId,
-        cantidad: item.cantidad
-      });
+      // Busca el producto por su productCode
+      const product = await Product.findOne({ where: { productCode: item.productCode } });
+
+      if (product) {
+        // Crea el OrderItem usando el productId del producto encontrado
+        await OrderItem.create({
+          orderId: newOrder.id,
+          productId: product.id, // Usa product.id en lugar de item.productCode
+          cantidad: item.cantidad
+        });
+      } else {
+        // Maneja el caso en que el producto no se encuentra
+        console.error(`Producto no encontrado: ${item.productCode}`);
+        // Puedes devolver un error al usuario o continuar con la creación de la orden sin el producto
+      }
     }
 
     const order = await Order.findOne({ 

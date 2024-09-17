@@ -15,16 +15,16 @@ const router = Router();
 // GET all Products
 router.get("/products", getProducts);
 
-// GET a Product by ID
-router.get("/products/:productId", getProductById);
+// GET a Product by Code
+router.get("/products/:productCode", getProductById); // Cambio: se usa :productCode en lugar de :productId
 
 // CREATE a new Product
 router.post("/products", createProduct);
 
 // UPDATE a Product
-router.put("/products/:productId", updateProduct);
+router.put("/products/:productCode", updateProduct); // Cambio: se usa :productCode en lugar de :productId
 
 // DELETE a Product
-router.delete("/products/:productId", deleteProduct);
+router.delete("/products/:productCode", deleteProduct); // Cambio: se usa :productCode en lugar de :productId
 
 export default router;

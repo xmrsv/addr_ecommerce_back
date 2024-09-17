@@ -3,11 +3,12 @@
 
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 
 import orderRoutes from "./route/order.route.js";
 import indexRoutes from "./route/index.route.js";
-import productRoutes from "./route/product.route.js"; // Importa las rutas de productos
-import cors from "cors";
+import productRoutes from "./route/product.route.js";
+import authRoutes from "./route/auth.route.js"; // Importa las rutas de autenticación
 
 const app = express();
 
@@ -19,7 +20,8 @@ app.use(express.json());
 // Routes
 app.use("/", indexRoutes);
 app.use("/api", orderRoutes);
-app.use("/api", productRoutes); // Registra las rutas de productos
+app.use("/api", productRoutes);
+app.use("/api", authRoutes); // Registra las rutas de autenticación
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Not found" });

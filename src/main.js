@@ -16,7 +16,7 @@ OrderItem.belongsTo(Product, { foreignKey: 'productId' }); // Relación añadida
 
 (async () => {
   try {
-    await sequelize.sync(); // Sincroniza todos los modelos con la base de datos
+    await sequelize.sync(); // Sincroniza los modelos con la base de datos (sin eliminar datos)
     console.log('Modelos sincronizados con la base de datos.');
   } catch (error) {
     console.error('Error al sincronizar los modelos:', error);

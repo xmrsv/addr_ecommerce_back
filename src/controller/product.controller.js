@@ -15,8 +15,8 @@ export const getProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
   try {
-    const { productId } = req.params;
-    const product = await Product.findByPk(productId);
+    const { productCode } = req.params; // Usamos productCode en lugar de productId
+    const product = await Product.findOne({ where: { productCode } }); // Buscamos por productCode
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
@@ -31,14 +31,15 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
-    const { nombre, descripcion, precio, imagen, stock } = req.body;
+    const { nombre, descripcion, precio, imagen, stock, productCode } = req.body; // Obtiene el productCode del cuerpo de la petición
 
     const newProduct = await Product.create({
       nombre,
       descripcion,
       precio,
       imagen,
-      stock
+      stock,
+      productCode // Guarda el productCode en la base de datos
     });
 
     res.status(201).json(newProduct);
@@ -50,8 +51,8 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const { productId } = req.params;
-    const { nombre, descripcion, precio, imagen, stock } = req.body;
+    const { productCode } = req.params; // Usamos productCode en lugar de productId
+    const { nombre, descripcion, precio, imagen, stock } = req.body; // Obtiene los datos del cuerpo de la petición
 
     const updatedProduct = await Product.update(
       {
@@ -61,14 +62,14 @@ export const updateProduct = async (req, res) => {
         imagen,
         stock
       },
-      { where: { id: productId } }
+      { where: { productCode } } // Actualiza el producto por productCode
     );
 
     if (updatedProduct[0] === 0) {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    const product = await Product.findByPk(productId);
+    const product = await Product.findOne({ where: { productCode } }); // Busca el producto actualizado
     res.json(product);
   } catch (error) {
     console.error("Error al actualizar el producto:", error);
@@ -78,8 +79,8 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
   try {
-    const { productId } = req.params;
-    const deletedProductCount = await Product.destroy({ where: { id: productId } });
+    const { productCode } = req.params; // Usamos productCode en lugar de productId
+    const deletedProductCount = await Product.destroy({ where: { productCode } }); // Elimina el producto por productCode
 
     if (deletedProductCount === 0) {
       return res.status(404).json({ message: "Product not found" });
