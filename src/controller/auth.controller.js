@@ -44,13 +44,15 @@ export const register = async (req, res) => {
     // Hashear la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Concatenar el nombre y los apellidos
+    const name = `${firstName} ${lastName}`;
+
     // Crear el nuevo usuario
     const newUser = await User.create({
       username,
       password: hashedPassword,
       email,
-      firstName,
-      lastName,
+      name, // Guardar el nombre completo
       enabled: false
     });
 
