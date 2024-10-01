@@ -3,6 +3,9 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 import OrderItem from "./OrderItem.js";
+import { logger } from "../utils/logger.js";
+
+logger.info("Defining Product model...");
 
 const Product = sequelize.define("Product", {
     nombre: {
@@ -31,8 +34,8 @@ const Product = sequelize.define("Product", {
     },
 });
 
-Product.hasMany(OrderItem, {
-    foreignKey: "productId",
-});
+Product.hasMany(OrderItem, { foreignKey: "productId" });
+
+logger.info("Product model defined successfully.");
 
 export default Product;

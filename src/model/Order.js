@@ -2,6 +2,9 @@
 
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
+import { logger } from "../utils/logger.js";
+
+logger.info("Defining Order model...");
 
 const Order = sequelize.define("Order", {
     estado: {
@@ -22,5 +25,7 @@ const Order = sequelize.define("Order", {
         allowNull: false,
     },
 });
+
+logger.info("Order model defined successfully.");
 
 export default Order;

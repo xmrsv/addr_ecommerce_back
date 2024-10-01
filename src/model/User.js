@@ -2,6 +2,9 @@
 
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
+import { logger } from "../utils/logger.js";
+
+logger.info("Defining User model...");
 
 const User = sequelize.define("User", {
     username: {
@@ -26,10 +29,22 @@ const User = sequelize.define("User", {
         allowNull: false,
         defaultValue: false,
     },
-    fullName: {
+    firstName: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            is: /^[a-zA-Z\sáéíóúüñÁÉÍÓÚÜÑ'-]+$/,
+        },
+    },
+    lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            is: /^[a-zA-Z\sáéíóúüñÁÉÍÓÚÜÑ'-]+$/,
+        },
     },
 });
+
+logger.info("User model defined successfully.");
 
 export default User;

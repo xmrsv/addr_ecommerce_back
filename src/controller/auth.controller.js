@@ -11,39 +11,46 @@ import {
     validateLastName,
 } from "../validation/user.js";
 import { JWT_SECRET } from "../config.js";
+import { logger } from "../utils/logger.js";
 
 export const register = async (req, res) => {
     try {
+        logger.info("User registration process started.");
         const { username, password, email, firstName, lastName } = req.body;
+        logger.info(`Received registration request for user: ${username}`);
 
         if (!validateUsername(username)) {
+            logger.warn(`Invalid username: ${username}`);
             return res.status(400).json({
-                message:
-                    "El nombre de usuario debe tener entre 3 y 20 caracteres.",
+                message: "Username must be between 3 and 20 characters.",
             });
         }
 
         if (!validatePassword(password)) {
+            logger.warn(`Invalid password for user: ${username}`);
             return res.status(400).json({
-                message: "La contraseña debe tener al menos 8 caracteres.",
+                message: "Password must be at least 8 characters long.",
             });
         }
 
         if (!validateEmail(email)) {
+            logger.warn(`Invalid email: ${email}`);
             return res.status(400).json({
-                message: "El email no es válido.",
+                message: "Invalid email address.",
             });
         }
 
         if (!validateFirstName(firstName)) {
+            logger.warn(`Invalid first name: ${firstName}`);
             return res.status(400).json({
-                message: "El nombre no es válido.",
+                message: "Invalid first name.",
             });
         }
 
         if (!validateLastName(lastName)) {
+            logger.warn(`Invalid last name: ${lastName}`);
             return res.status(400).json({
-                message: "Los apellidos no son válidos.",
+                message: "Invalid last name.",
             });
         }
 
@@ -52,15 +59,19 @@ export const register = async (req, res) => {
         });
 
         if (existingUser) {
+            logger.warn(`Username already exists: ${username}`);
             return res.status(400).json({
-                message: "El nombre de usuario ya está en uso.",
+                message: "Username already exists.",
             });
         }
 
+        logger.info("Hashing password...");
         const hashedPassword = await bcrypt.hash(password, 10);
+        logger.info("Password hashed successfully.");
 
         const fullName = `${firstName} ${lastName}`;
 
+        logger.info(`Creating new user: ${username}`);
         const newUser = await User.create({
             username,
             password: hashedPassword,
@@ -68,64 +79,75 @@ export const register = async (req, res) => {
             fullName,
             enabled: false,
         });
+        logger.info(`User created successfully: ${newUser.id}`);
 
         res.status(201).json({
             message:
-                "Usuario creado correctamente. Espera la aprobación del administrador.",
+                "User created successfully. Please wait for admin approval.",
             newUser,
         });
     } catch (error) {
-        console.error("Error al registrar el usuario:", error);
+        logger.error("Error during user registration:", error);
         return res.status(500).json({
-            message: "Something goes wrong",
+            message: "Something went wrong.",
         });
     }
 };
 
 export const login = async (req, res) => {
     try {
+        logger.info("Login process started.");
         const { username, password } = req.body;
+        logger.info(`Received login request for user: ${username}`);
 
         const user = await User.findOne({
             where: { username },
         });
 
         if (!user) {
+            logger.warn(`User not found: ${username}`);
             return res.status(401).json({
-                message: "Credenciales inválidas",
+                message: "Invalid credentials.",
             });
         }
 
+        logger.info("Comparing passwords...");
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
+            logger.warn(`Invalid password for user: ${username}`);
             return res.status(401).json({
-                message: "Credenciales inválidas",
+                message: "Invalid credentials.",
             });
         }
 
         if (!user.enabled) {
+            logger.warn(`Account disabled for user: ${username}`);
             return res.status(401).json({
-                message: "Cuenta inhabilitada",
+                message: "Account disabled.",
             });
         }
 
+        logger.info("Generating JWT token...");
         const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
             expiresIn: "1d",
         });
+        logger.info("JWT token generated successfully.");
 
+        logger.info("Setting cookie...");
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
             sameSite: "strict",
         });
+        logger.info("Cookie set successfully.");
 
         res.status(200).json({
-            message: "Inicio de sesión exitoso",
+            message: "Login successful.",
         });
     } catch (error) {
-        console.error("Error al iniciar sesión:", error);
+        logger.error("Error during user login:", error);
         return res.status(500).json({
-            message: "Something goes wrong",
+            message: "Something went wrong.",
         });
     }
 };

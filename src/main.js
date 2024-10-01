@@ -6,31 +6,21 @@ import sequelize from "./config/database.js";
 import Order from "./model/Order.js";
 import Product from "./model/Product.js";
 import OrderItem from "./model/OrderItem.js";
+import { logger } from "./utils/logger.js";
+import { defineRelations } from "./model/relation.js";
 
-// Relaciones entre modelos
-Order.hasMany(OrderItem, {
-    foreignKey: "orderId",
-});
-Product.hasMany(OrderItem, {
-    foreignKey: "productId",
-});
-OrderItem.belongsTo(Order, {
-    foreignKey: "orderId",
-});
-OrderItem.belongsTo(Product, {
-    foreignKey: "productId",
-});
+// Define las relaciones entre los modelos
+defineRelations();
 
 (async () => {
     try {
-        // Sincroniza los modelos con la base de datos
+        logger.info("Starting server...");
         await sequelize.sync();
-        console.log("Modelos sincronizados con la base de datos.");
+        logger.info("Database synchronized.");
+        app.listen(PORT, () => {
+            logger.info(`Server listening on port ${PORT}.`);
+        });
     } catch (error) {
-        console.error("Error al sincronizar los modelos:", error);
+        logger.error(`Error during server initialization: ${error}`);
     }
 })();
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
