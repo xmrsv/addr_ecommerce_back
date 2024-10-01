@@ -4,7 +4,6 @@ import { index, ping } from "../controller/index.controller.js";
 const router = Router();
 
 router.get("/", index);
-
 router.get("/ping", ping);
 
 export default router;

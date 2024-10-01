@@ -1,26 +1,25 @@
-// Ruta: src/model/RolePermission.js
-// Nombre del archivo: RolePermission.js
+// src/model/RolePermission.js
 
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 
 const RolePermission = sequelize.define("RolePermission", {
-  roleId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: "Roles", // Nombre del modelo Role
-      key: "id",
+    roleId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: "Roles",
+            key: "id",
+        },
     },
-  },
-  permissionId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: "Permissions", // Nombre del modelo Permission
-      key: "id",
+    permissionId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: "Permissions",
+            key: "id",
+        },
     },
-  },
 });
 
 export default RolePermission;

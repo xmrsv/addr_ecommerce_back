@@ -1,5 +1,4 @@
-// Ruta: src/route/auth.route.js
-// Nombre del archivo: auth.route.js
+// src/route/auth.route.js
 
 import { Router } from "express";
 import { register, login } from "../controller/auth.controller.js";

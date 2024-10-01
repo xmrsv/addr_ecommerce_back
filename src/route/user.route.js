@@ -1,12 +1,11 @@
-// Ruta: src/route/user.route.js
-// Nombre del archivo: user.route.js
+// src/route/user.route.js
 
 import { Router } from "express";
 import { approveUser } from "../controller/user.controller.js";
-import { authorize } from "../middleware/auth.js"; // Importa el middleware authorize
+import { authorize } from "../middleware/auth.js";
 
 const router = Router();
 
-router.put("/users/:userId/approve", authorize(["admin"]), approveUser); // Protege la ruta con el middleware authorize
+router.put("/users/:userId/approve", authorize(["admin"]), approveUser);
 
 export default router;
