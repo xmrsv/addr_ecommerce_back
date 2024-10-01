@@ -1,18 +1,18 @@
 // Ruta: src/model/Permission.js
 // Nombre del archivo: Permission.js
 
-import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
-const Permission = sequelize.define('Permission', {
+const Permission = sequelize.define("Permission", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   description: {
-    type: DataTypes.STRING
-  }
+    type: DataTypes.STRING,
+  },
 });
 
 export default Permission;

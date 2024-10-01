@@ -22,7 +22,7 @@
     "productCode": "IPHONE-XR",
     "createdAt": "2024-09-09T22:09:33.000Z",
     "updatedAt": "2024-09-09T22:09:33.000Z"
-  },
+  }
   // ... más productos
 ]
 ```

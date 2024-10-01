@@ -3,11 +3,11 @@
 
 import { Router } from "express";
 import {
-	createOrder,
-	deleteOrderById,
-	getOrderById,
-	getOrders,
-	actualizarOrden
+  createOrder,
+  deleteOrderById,
+  getOrderById,
+  getOrders,
+  actualizarOrden,
 } from "../controller/order.controller.js";
 
 const router = Router();

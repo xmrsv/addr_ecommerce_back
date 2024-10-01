@@ -1,15 +1,15 @@
 // Ruta: src/model/Role.js
 // Nombre del archivo: Role.js
 
-import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { DataTypes } from "sequelize";
+import sequelize from "../config/database.js";
 
-const Role = sequelize.define('Role', {
+const Role = sequelize.define("Role", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
-  }
+    unique: true,
+  },
 });
 
 export default Role;

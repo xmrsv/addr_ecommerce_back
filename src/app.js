@@ -26,7 +26,7 @@ app.use("/api", productRoutes);
 app.use("/api", authRoutes); // Registra las rutas de autenticación
 
 app.use((req, res, next) => {
-	res.status(404).json({ message: "Not found" });
+  res.status(404).json({ message: "Not found" });
 });
 
 export default app;

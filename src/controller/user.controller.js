@@ -1,7 +1,7 @@
 // Ruta: src/controller/user.controller.js
 // Nombre del archivo: user.controller.js
 
-import User from '../model/User.js';
+import User from "../model/User.js";
 
 // Función para obtener todos los usuarios
 export const getUsers = async (req, res) => {
@@ -36,7 +36,7 @@ export const updateUser = async (req, res) => {
     const { username, email, firstName, lastName, enabled } = req.body;
     const updatedUser = await User.update(
       { username, email, firstName, lastName, enabled },
-      { where: { id: userId } }
+      { where: { id: userId } },
     );
     if (updatedUser[0] === 0) {
       return res.status(404).json({ message: "Usuario no encontrado." });
@@ -73,7 +73,7 @@ export const approveUser = async (req, res) => {
     // Actualizar el usuario
     const updatedUser = await User.update(
       { enabled: true },
-      { where: { id: userId } }
+      { where: { id: userId } },
     );
 
     if (updatedUser[0] === 0) {

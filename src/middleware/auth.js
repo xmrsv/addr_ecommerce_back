@@ -1,7 +1,7 @@
 // Ruta: src/middleware/auth.js
 // Nombre del archivo: auth.js
 
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 // Middleware para verificar el token JWT
 const authenticate = (req, res, next) => {
@@ -11,7 +11,7 @@ const authenticate = (req, res, next) => {
 
     // Verificar si el token existe
     if (!token) {
-      return res.status(401).json({ message: 'No autorizado' });
+      return res.status(401).json({ message: "No autorizado" });
     }
 
     // Verificar el token
@@ -24,7 +24,7 @@ const authenticate = (req, res, next) => {
     next();
   } catch (error) {
     console.error("Error de autenticación:", error);
-    return res.status(401).json({ message: 'No autorizado' });
+    return res.status(401).json({ message: "No autorizado" });
   }
 };
 
@@ -33,12 +33,14 @@ const authorize = (roles) => {
   return (req, res, next) => {
     // Verificar si el usuario está autenticado
     if (!req.user) {
-      return res.status(401).json({ message: 'No autorizado' });
+      return res.status(401).json({ message: "No autorizado" });
     }
 
     // Verificar si el rol del usuario está en la lista de roles permitidos
     if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ message: 'No tienes permiso para acceder a este recurso.' });
+      return res
+        .status(403)
+        .json({ message: "No tienes permiso para acceder a este recurso." });
     }
 
     // Continuar con la siguiente función de middleware o controlador

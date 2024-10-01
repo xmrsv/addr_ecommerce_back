@@ -7,6 +7,6 @@ import { authorize } from "../middleware/auth.js"; // Importa el middleware auth
 
 const router = Router();
 
-router.put("/users/:userId/approve", authorize(['admin']), approveUser); // Protege la ruta con el middleware authorize
+router.put("/users/:userId/approve", authorize(["admin"]), approveUser); // Protege la ruta con el middleware authorize
 
 export default router;

@@ -1,15 +1,15 @@
 // Ruta: src/controller/order.controller.js
 // Nombre del archivo: order.controller.js
 
-import Order from '../model/Order.js'; // Importa el modelo Order
-import OrderItem from '../model/OrderItem.js'; // Importa el modelo OrderItem
-import Product from '../model/Product.js'; // Importa el modelo Product
+import Order from "../model/Order.js"; // Importa el modelo Order
+import OrderItem from "../model/OrderItem.js"; // Importa el modelo OrderItem
+import Product from "../model/Product.js"; // Importa el modelo Product
 
 // Función para generar un ID de orden aleatorio
 function generarOrdenId() {
   try {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const charactersLength = characters.length;
     for (let i = 0; i < 6; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -35,18 +35,22 @@ export const getOrders = async (req, res) => {
       whereClause.ordenId = ordenId; // Agrega el filtro de ordenId si está presente
     }
 
-    const orders = await Order.findAll({ 
+    const orders = await Order.findAll({
       where: whereClause,
-      attributes: { exclude: ['id'] }, // Excluye el ID de la base de datos de la respuesta
-      include: [{ 
-        model: OrderItem,
-        attributes: ['cantidad'],
-        include: [{ 
-          model: Product,
-          attributes: ['nombre', 'precio'] 
-        }]
-      }]
-    }); 
+      attributes: { exclude: ["id"] }, // Excluye el ID de la base de datos de la respuesta
+      include: [
+        {
+          model: OrderItem,
+          attributes: ["cantidad"],
+          include: [
+            {
+              model: Product,
+              attributes: ["nombre", "precio"],
+            },
+          ],
+        },
+      ],
+    });
 
     res.json(orders);
   } catch (error) {
@@ -59,18 +63,22 @@ export const getOrderById = async (req, res) => {
   try {
     const { orderId } = req.params; // Obtiene el orderId de la ruta
 
-    const order = await Order.findOne({ 
+    const order = await Order.findOne({
       where: { ordenId: orderId },
-      attributes: { exclude: ['id'] }, // Excluye el ID de la base de datos de la respuesta
-      include: [{ 
-        model: OrderItem,
-        attributes: ['cantidad'],
-        include: [{ 
-          model: Product,
-          attributes: ['nombre', 'precio'] 
-        }]
-      }]
-     });
+      attributes: { exclude: ["id"] }, // Excluye el ID de la base de datos de la respuesta
+      include: [
+        {
+          model: OrderItem,
+          attributes: ["cantidad"],
+          include: [
+            {
+              model: Product,
+              attributes: ["nombre", "precio"],
+            },
+          ],
+        },
+      ],
+    });
 
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
@@ -87,7 +95,9 @@ export const deleteOrderById = async (req, res) => {
   try {
     const { orderId } = req.params; // Obtiene el orderId de la ruta
 
-    const deletedOrderCount = await Order.destroy({ where: { ordenId: orderId } });
+    const deletedOrderCount = await Order.destroy({
+      where: { ordenId: orderId },
+    });
 
     if (deletedOrderCount === 0) {
       return res.status(404).json({ message: "Order not found" });
@@ -102,15 +112,16 @@ export const deleteOrderById = async (req, res) => {
 
 export const createOrder = async (req, res) => {
   try {
-    const { estado, descripcionOrden, fechaSalida, fechaEntrega, items } = req.body; // items es un array de objetos con productId y cantidad
+    const { estado, descripcionOrden, fechaSalida, fechaEntrega, items } =
+      req.body; // items es un array de objetos con productId y cantidad
     const ordenId = generarOrdenId();
 
-    const newOrder = await Order.create({ 
-      estado, 
-      descripcionOrden, 
-      fechaSalida, 
-      fechaEntrega, 
-      ordenId 
+    const newOrder = await Order.create({
+      estado,
+      descripcionOrden,
+      fechaSalida,
+      fechaEntrega,
+      ordenId,
     });
 
     // Crear los OrderItems para cada producto en la orden
@@ -118,20 +129,20 @@ export const createOrder = async (req, res) => {
       await OrderItem.create({
         orderId: newOrder.id,
         productId: item.productId,
-        cantidad: item.cantidad
+        cantidad: item.cantidad,
       });
     }
 
     // Excluye el ID de la base de datos de la respuesta
-    const orderWithoutId = { 
+    const orderWithoutId = {
       estado: newOrder.estado,
       descripcionOrden: newOrder.descripcionOrden,
       fechaSalida: newOrder.fechaSalida,
       fechaEntrega: newOrder.fechaEntrega,
-      ordenId: newOrder.ordenId
+      ordenId: newOrder.ordenId,
     };
 
-    res.status(201).json(orderWithoutId); 
+    res.status(201).json(orderWithoutId);
   } catch (error) {
     console.error("Error al crear la orden:", error);
     return res.status(500).json({ message: "Something goes wrong" });
@@ -141,16 +152,17 @@ export const createOrder = async (req, res) => {
 export const actualizarOrden = async (req, res) => {
   try {
     const { orderId } = req.params; // Obtiene el orderId de la ruta
-    const { estado, descripcionOrden, fechaSalida, fechaEntrega, items } = req.body; // ordenId no se puede actualizar
+    const { estado, descripcionOrden, fechaSalida, fechaEntrega, items } =
+      req.body; // ordenId no se puede actualizar
 
     const updatedOrder = await Order.update(
-      { 
-        estado, 
-        descripcionOrden, 
-        fechaSalida, 
-        fechaEntrega
+      {
+        estado,
+        descripcionOrden,
+        fechaSalida,
+        fechaEntrega,
       },
-      { where: { ordenId: orderId } }
+      { where: { ordenId: orderId } },
     );
 
     if (updatedOrder[0] === 0) {
@@ -163,14 +175,16 @@ export const actualizarOrden = async (req, res) => {
     // Crear los OrderItems para cada producto en la orden
     for (const item of items) {
       // Busca el producto por su productCode
-      const product = await Product.findOne({ where: { productCode: item.productCode } });
+      const product = await Product.findOne({
+        where: { productCode: item.productCode },
+      });
 
       if (product) {
         // Crea el OrderItem usando el productId del producto encontrado
         await OrderItem.create({
           orderId: newOrder.id,
           productId: product.id, // Usa product.id en lugar de item.productCode
-          cantidad: item.cantidad
+          cantidad: item.cantidad,
         });
       } else {
         // Maneja el caso en que el producto no se encuentra
@@ -179,17 +193,21 @@ export const actualizarOrden = async (req, res) => {
       }
     }
 
-    const order = await Order.findOne({ 
+    const order = await Order.findOne({
       where: { ordenId: orderId },
-      attributes: { exclude: ['id'] }, // Excluye el ID de la base de datos de la respuesta
-      include: [{ 
-        model: OrderItem,
-        attributes: ['cantidad'],
-        include: [{ 
-          model: Product,
-          attributes: ['nombre', 'precio'] 
-        }]
-      }]
+      attributes: { exclude: ["id"] }, // Excluye el ID de la base de datos de la respuesta
+      include: [
+        {
+          model: OrderItem,
+          attributes: ["cantidad"],
+          include: [
+            {
+              model: Product,
+              attributes: ["nombre", "precio"],
+            },
+          ],
+        },
+      ],
     });
 
     res.json(order);

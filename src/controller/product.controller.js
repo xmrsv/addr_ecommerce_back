@@ -1,7 +1,7 @@
 // Ruta: src/controller/product.controller.js
 // Nombre del archivo: product.controller.js
 
-import Product from '../model/Product.js';
+import Product from "../model/Product.js";
 
 export const getProducts = async (req, res) => {
   try {
@@ -31,7 +31,8 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   try {
-    const { nombre, descripcion, precio, imagen, stock, productCode } = req.body; // Obtiene el productCode del cuerpo de la petición
+    const { nombre, descripcion, precio, imagen, stock, productCode } =
+      req.body; // Obtiene el productCode del cuerpo de la petición
 
     const newProduct = await Product.create({
       nombre,
@@ -39,7 +40,7 @@ export const createProduct = async (req, res) => {
       precio,
       imagen,
       stock,
-      productCode // Guarda el productCode en la base de datos
+      productCode, // Guarda el productCode en la base de datos
     });
 
     res.status(201).json(newProduct);
@@ -60,9 +61,9 @@ export const updateProduct = async (req, res) => {
         descripcion,
         precio,
         imagen,
-        stock
+        stock,
       },
-      { where: { productCode } } // Actualiza el producto por productCode
+      { where: { productCode } }, // Actualiza el producto por productCode
     );
 
     if (updatedProduct[0] === 0) {
@@ -80,7 +81,9 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   try {
     const { productCode } = req.params; // Usamos productCode en lugar de productId
-    const deletedProductCount = await Product.destroy({ where: { productCode } }); // Elimina el producto por productCode
+    const deletedProductCount = await Product.destroy({
+      where: { productCode },
+    }); // Elimina el producto por productCode
 
     if (deletedProductCount === 0) {
       return res.status(404).json({ message: "Product not found" });

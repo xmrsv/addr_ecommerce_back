@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon ./src/main.js",
     "start": "node ./src/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
   },
   "author": "xmrsv",
   "license": "ISC",
@@ -25,5 +26,9 @@
     "nodemon": "^3.1.4",
     "sequelize": "^6.37.3",
     "supertest": "^7.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.11.1",
+    "prettier": "^3.3.3"
   }
 }
