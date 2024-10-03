@@ -1,14 +1,7 @@
-import js from "@eslint/js";
+import globals from "globals";
+import pluginJs from "@eslint/js";
 
 export default [
-    js.configs.recommended,
-
-    {
-        rules: {
-            "no-unused-vars": "off",
-            "no-undef": "off",
-            yoda: "error",
-            "no-var": "error",
-        },
-    },
+    { languageOptions: { globals: globals.browser } },
+    pluginJs.configs.recommended,
 ];
