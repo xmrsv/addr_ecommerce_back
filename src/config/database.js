@@ -10,7 +10,7 @@ import {
 } from "./../config.js";
 import { logger } from "../utils/logger.js";
 
-logger.info('Connecting to the database...');
+logger.info("Connecting to the database...");
 const sequelize = new Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
     host: DB_HOST,
     port: DB_PORT,
@@ -19,12 +19,12 @@ const sequelize = new Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
 
 // Verificar la conexión a la base de datos
 (async () => {
-  try {
-    await sequelize.authenticate();
-    logger.info('Database connection successful.');
-  } catch (error) {
-    logger.error(`Unable to connect to the database: ${error}`);
-  }
+    try {
+        await sequelize.authenticate();
+        logger.info("Database connection successful.");
+    } catch (error) {
+        logger.error(`Unable to connect to the database: ${error}`);
+    }
 })();
 
 export default sequelize;
