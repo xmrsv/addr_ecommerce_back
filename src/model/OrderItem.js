@@ -1,5 +1,4 @@
 // src/model/OrderItem.js
-
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 import { logger } from "../utils/logger.js";

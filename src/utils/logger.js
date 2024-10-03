@@ -1,13 +1,10 @@
 // src/utils/logger.js
-
 import { format } from "date-fns"; // Importa la función format de date-fns
 
-// Función para obtener la marca de tiempo actual en formato legible
 function getTimestamp() {
     return format(new Date(), "yyyy-MM-dd HH:mm:ss");
 }
 
-// Objeto logger con métodos para cada tipo de log
 export const logger = {
     info: message => {
         const filename = new Error().stack

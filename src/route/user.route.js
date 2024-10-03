@@ -1,5 +1,4 @@
 // src/route/user.route.js
-
 import { Router } from "express";
 import { approveUser } from "../controller/user.controller.js";
 import { authorize } from "../middleware/auth.js";

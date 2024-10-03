@@ -1,5 +1,4 @@
 // src/controller/index.controller.js
-
 import sequelize from "../config/database.js";
 import { logger } from "../utils/logger.js";
 

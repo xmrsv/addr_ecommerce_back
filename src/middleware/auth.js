@@ -1,5 +1,4 @@
 // src/middleware/auth.js
-
 import jwt from "jsonwebtoken";
 import { logger } from "../utils/logger.js";
 import process from "process";

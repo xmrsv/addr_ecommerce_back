@@ -1,5 +1,4 @@
 // src/route/product.route.js
-
 import { Router } from "express";
 import {
     createProduct,

@@ -1,3 +1,4 @@
+// src/route/index.route.js
 import { Router } from "express";
 import { index, ping } from "../controller/index.controller.js";
 

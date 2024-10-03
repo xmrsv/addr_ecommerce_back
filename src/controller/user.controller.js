@@ -1,5 +1,4 @@
 // src/controller/user.controller.js
-
 import User from "../model/User.js";
 import { logger } from "../utils/logger.js";
 

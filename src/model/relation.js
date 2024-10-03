@@ -1,5 +1,4 @@
 // src/model/relation.js
-
 import Order from "./Order.js";
 import Product from "./Product.js";
 import OrderItem from "./OrderItem.js";

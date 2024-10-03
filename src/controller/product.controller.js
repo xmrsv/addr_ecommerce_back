@@ -1,5 +1,4 @@
 // src/controller/product.controller.js
-
 import Product from "../model/Product.js";
 import { logger } from "../utils/logger.js";
 
