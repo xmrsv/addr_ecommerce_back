@@ -40,7 +40,7 @@ logger.info("Product routes configured.");
 app.use("/api", authRoutes);
 logger.info("Authentication routes configured.");
 
-app.use((req, res, next) => {
+app.use((req, res) => {
     logger.warn("Route not found.");
     res.status(404).json({ message: "Not found" });
 });

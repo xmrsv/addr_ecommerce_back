@@ -16,8 +16,8 @@ export const getUsers = async (req, res) => {
 };
 
 export const getUserById = async (req, res) => {
+    const { userId } = req.params;
     try {
-        const { userId } = req.params;
         logger.info(`Fetching user with ID ${userId}...`);
         const user = await User.findByPk(userId);
 
@@ -35,8 +35,8 @@ export const getUserById = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
+    const { userId } = req.params;
     try {
-        const { userId } = req.params;
         logger.info(`Updating user with ID ${userId}...`);
         const { username, email, firstName, lastName, enabled } = req.body;
 
@@ -69,8 +69,8 @@ export const updateUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
+    const { userId } = req.params;
     try {
-        const { userId } = req.params;
         logger.info(`Deleting user with ID ${userId}...`);
 
         const deletedUserCount = await User.destroy({ where: { id: userId } });
@@ -89,8 +89,8 @@ export const deleteUser = async (req, res) => {
 };
 
 export const approveUser = async (req, res) => {
+    const { userId } = req.params;
     try {
-        const { userId } = req.params;
         logger.info(`Approving user with ID ${userId}...`);
 
         // El middleware authorize ya ha verificado que el usuario es administrador

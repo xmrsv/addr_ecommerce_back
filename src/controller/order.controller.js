@@ -67,8 +67,8 @@ export const getOrders = async (req, res) => {
 };
 
 export const getOrderById = async (req, res) => {
+    const { orderId } = req.params;
     try {
-        const { orderId } = req.params;
         logger.info(`Fetching order with ID: ${orderId}`);
 
         const order = await Order.findOne({
@@ -102,8 +102,8 @@ export const getOrderById = async (req, res) => {
 };
 
 export const deleteOrderById = async (req, res) => {
+    const { orderId } = req.params;
     try {
-        const { orderId } = req.params;
         logger.info(`Deleting order with ID: ${orderId}`);
 
         const deletedOrderCount = await Order.destroy({
@@ -197,8 +197,8 @@ export const createOrder = async (req, res) => {
 };
 
 export const actualizarOrden = async (req, res) => {
+    const { orderId } = req.params;
     try {
-        const { orderId } = req.params;
         logger.info(`Updating order with ID: ${orderId}`);
         const { estado, descripcionOrden, fechaSalida, fechaEntrega, items } =
             req.body;

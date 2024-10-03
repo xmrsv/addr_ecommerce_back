@@ -2,6 +2,7 @@
 
 import jwt from "jsonwebtoken";
 import { logger } from "../utils/logger.js";
+import process from "process";
 
 const authenticate = (req, res, next) => {
     logger.info("Authentication middleware triggered.");

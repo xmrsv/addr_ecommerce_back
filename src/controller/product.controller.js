@@ -16,8 +16,8 @@ export const getProducts = async (req, res) => {
 };
 
 export const getProductById = async (req, res) => {
+    const { productCode } = req.params;
     try {
-        const { productCode } = req.params;
         logger.info(`Fetching product with code ${productCode}...`);
         const product = await Product.findOne({ where: { productCode } });
 
@@ -71,8 +71,8 @@ export const createProduct = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
+    const { productCode } = req.params;
     try {
-        const { productCode } = req.params;
         logger.info(`Updating product with code ${productCode}...`);
         const { nombre, descripcion, precio, imagen, stock } = req.body;
 
@@ -116,8 +116,8 @@ export const updateProduct = async (req, res) => {
 };
 
 export const deleteProduct = async (req, res) => {
+    const { productCode } = req.params;
     try {
-        const { productCode } = req.params;
         logger.info(`Deleting product with code ${productCode}...`);
 
         const deletedProductCount = await Product.destroy({

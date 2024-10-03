@@ -1,5 +1,7 @@
 // src/config.js
 
+import process from "process";
+
 export const PORT = process.env.PORT || 3000;
 export const DB_HOST = process.env.DB_HOST || "autorack.proxy.rlwy.net";
 export const DB_USER = process.env.DB_USER || "root";
