@@ -13,7 +13,7 @@ export const logger = {
             .pop()
             .split(":")[0];
         console.log(
-            `\x1b[36m[${getTimestamp()}] INFO\x1b[0m - ${filename}: ${message}`
+            `\x1b[36m[${getTimestamp()}] (INFO)\x1b[0m ${filename}: ${message}`
         ); // Cian
     },
     warn: message => {
@@ -23,7 +23,7 @@ export const logger = {
             .pop()
             .split(":")[0];
         console.warn(
-            `\x1b[33m[${getTimestamp()}] WARN\x1b[0m - ${filename}: ${message}`
+            `\x1b[33m[${getTimestamp()}] (WARN)\x1b[0m ${filename}: ${message}`
         ); // Amarillo
     },
     error: message => {
@@ -33,7 +33,7 @@ export const logger = {
             .pop()
             .split(":")[0];
         console.error(
-            `\x1b[31m[${getTimestamp()}] ERROR\x1b[0m - ${filename}: ${message}`
+            `\x1b[31m[${getTimestamp()}] (ERROR)\x1b[0m ${filename}: ${message}`
         ); // Rojo
     },
 };

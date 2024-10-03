@@ -4,8 +4,8 @@
     "main": "main.js",
     "type": "module",
     "scripts": {
-        "dev": "nodemon ./src/main.js",
-        "start": "node ./src/main.js",
+        "dev": "nodemon --env-file .env ./src/main.js ",
+        "start": "node --env-file .env ./src/main.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "format": "prettier --write .",
         "lint": "eslint ."
